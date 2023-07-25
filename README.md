@@ -61,11 +61,11 @@ git pull
 ```
 
 ### Snippets
-![](public/assets/search1.png) 
+![search1](public/assets/search1.png) 
 
-![](public/assets/search2.png)
+![search2](public/assets/search2.png)
 
-![](public/assets/update.png)
+![update](public/assets/update.png)
 
 
 
