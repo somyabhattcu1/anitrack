@@ -1,4 +1,73 @@
-# Getting Started with Create React App
+# AniTracker Chrome Extension
+
+### AniTracker is a Chrome extension that provides a seamless way to update your anime details on AniList without having to visit the website. Whether you are watching anime on aniwatch.to or any other platform, AniTracker allows you to conveniently update your progress, scores, and status directly through the extension.
+
+## Token
+> [Login With AniList / Get Your Token](https://anilist.co/api/v2/oauth/authorize?client_id={client_id}&response_type=token)
+
+
+## Features
+
+* Updates the status of an anime (watching, completed, dropped, etc.)
+* Updates the score of an anime
+* Updates the episode number of an anime
+
+
+## How to use ?
+Require nodejs v14+, git.
+
+### Installation
+```sh
+git clone https://github.com/somyabhattcu1/anitrack.git
+```
+```
+cd anitrack
+```
+paste the tokem you get from the above link in the .env file
+
+
+```
+REACT_APP_CUSTOM123 = 'PASTE_YOUR_TOKEN_HERE'
+```
+
+### How to add/run on your browser
+
+```
+npm install
+```
+
+```
+npm run build
+```
+
+> Ex: chrome
+
+- Open the Chrome browser and navigate to chrome://extensions.
+
+- Enable the "Developer mode" toggle switch in the top right corner of the page.
+
+- Click on the "Load unpacked" button.
+
+- Select the repository folder (anitrack) from your local machine.
+
+- The Chrome extension will be loaded and added to your browser.
+
+- You should see the extension's icon appear in the Chrome toolbar. Click on the icon to access the extension's functionality.
+
+
+### For Updates 
+```
+git pull
+```
+
+
+
+
+
+
+
+
+<!-- # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -67,4 +136,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify) -->
