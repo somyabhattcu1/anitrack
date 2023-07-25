@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import './App.css';
 import SearchPage from './components/SearchPage';
 import UpdatePage from './components/UpdatePage';

@@ -10,26 +10,27 @@ const UpdatePage = () => {
     const [status, setStatus] = useState("");
     const [score, setScore] = useState("");
     const [episodes, setEpisodes] = useState("");
+    const [repeat, setRepeat] = useState(0);    
 
 
     function changeHandlerStatus(e) {
         const { value } = e.target;
         setStatus(value);
-        console.log(value);
     }
 
     function changeHandlerScore(e) {
         const { value } = e.target;
         setScore(value);
-        console.log(value);
-
     }
 
     function changeHandlerEpisodes(e) {
         const { value } = e.target;
         setEpisodes(value);
-        console.log(value);
+    }
 
+    function changeHandlerRepeat(e){
+        setRepeat(e.target.value);
+        console.log("updated value of repeat is : ",repeat)
     }
 
     const getInfo = () => {
@@ -40,6 +41,7 @@ const UpdatePage = () => {
           status
           score
           progress
+          repeat
         }
       }
     `;
@@ -61,7 +63,7 @@ const UpdatePage = () => {
                 setStatus(data.data.SaveMediaListEntry.status);
                 setScore(data.data.SaveMediaListEntry.score);
                 setEpisodes(data.data.SaveMediaListEntry.progress);
-                console.log(data);
+                setRepeat(data.data.SaveMediaListEntry.repeat)
             })
             .catch(error => {
                 console.error(error);
@@ -71,16 +73,19 @@ const UpdatePage = () => {
 
     useEffect(() => {
         getInfo();
+        console.log()
     }, [])
 
     function submitHandler() {
         const mutationQuery = `
-    mutation ($mediaId: Int, $status: MediaListStatus,$progress:Int,$score:Float) {
-      SaveMediaListEntry (mediaId: $mediaId, status: $status, progress:$progress,score:$score) {
+    mutation ($mediaId: Int, $status: MediaListStatus,$progress:Int,$score:Float,$repeat:Int) {
+      SaveMediaListEntry (mediaId: $mediaId, status: $status, progress:$progress,score:$score, repeat:$repeat) {
           id
           status
           progress
           score
+          repeat
+
       }
   }
   `;
@@ -89,7 +94,8 @@ const UpdatePage = () => {
             mediaId: parseInt(animeId),
             score: parseInt(score),
             progress: parseInt(episodes),
-            status: status
+            status: status,
+            repeat : parseInt(repeat)
         }
 
 
@@ -158,6 +164,13 @@ const UpdatePage = () => {
                     id='episodes'
                     value={episodes}
                     onChange={changeHandlerEpisodes}
+                />
+                <label htmlFor="repeat">Repeat</label>
+                <input type="number"
+                    name='repeat'
+                    id='repeat'
+                    value={repeat}
+                    onChange={changeHandlerRepeat}
                 />
             </div>
             <div className='buttons'>
