@@ -2,8 +2,7 @@ import React, { createContext, useState } from 'react';
 const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
-
-    const TOKEN = "PASTE_YOUR_TOKEN";
+    const TOKEN = process.env.REACT_APP_CUSTOM123;
     const [inputTxt,setInputTxt] = useState('');
     const [animeData, setAnimeData] = useState([]);
     const [titleClick,setTitleClick] = useState(false);
@@ -15,6 +14,8 @@ const AppContextProvider = ({ children }) => {
       setAnimeId(key);
     }
 
+
+    // Change Handler for inputTxt 
     const InputHandler = (e) => {
         const {value} = e.target;
         setInputTxt(value);
