@@ -11,6 +11,7 @@ AniTracker is a extension that provides a seamless way to update your anime deta
 * Updates the status of an anime (watching, completed, dropped, etc.)
 * Updates the score of an anime
 * Updates the episode number of an anime
+* Updates the rewatch number of an anime
 
 
 ## How to use ?
