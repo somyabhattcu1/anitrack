@@ -1,6 +1,6 @@
-# AniTracker Chrome Extension
+# AniTracker Extension
 
-AniTracker is a Chrome extension that provides a seamless way to update your anime details on AniList without having to visit the website. Whether you are watching anime on aniwatch.to or any other platform, AniTracker allows you to conveniently update your progress, scores, and status directly through the extension.
+AniTracker is a extension that provides a seamless way to update your anime details on AniList without having to visit the website. Whether you are watching anime on aniwatch.to or any other platform, AniTracker allows you to conveniently update your progress, scores, and status directly through the extension.
 
 ## Token
 > [Login With AniList / Get Your Token](https://anilist.co/api/v2/oauth/authorize?client_id=13617&response_type=token)
