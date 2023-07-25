@@ -7,8 +7,6 @@ import '../App.css'
 const UpdatePage = () => {
 
     const { TOKEN, animeData, animeId } = useContext(AppContext)
-
-
     const [status, setStatus] = useState("");
     const [score, setScore] = useState("");
     const [episodes, setEpisodes] = useState("");
@@ -111,11 +109,9 @@ const UpdatePage = () => {
         })
             .then(response => response.json())
             .then(data => {
-                // Handle the response data here
                 console.log(data);
             })
             .catch(error => {
-                // Handle any errors that occurred during the fetch request
                 console.error('Error:', error);
             });
 
