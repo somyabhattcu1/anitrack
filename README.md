@@ -24,7 +24,9 @@ git clone https://github.com/somyabhattcu1/anitrack.git
 ```
 cd anitrack
 ```
-paste the tokem you get from the above link in the .env file
+Create an .env file in your root folder ```(anitrack)```
+
+Paste the tokem you get from the above link in the .env file in following way
 
 
 ```
