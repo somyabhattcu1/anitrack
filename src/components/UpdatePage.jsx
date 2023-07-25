@@ -13,6 +13,7 @@ const UpdatePage = () => {
     const [score, setScore] = useState("");
     const [episodes, setEpisodes] = useState("");
 
+
     function changeHandlerStatus(e) {
         const { value } = e.target;
         setStatus(value);
@@ -123,6 +124,7 @@ const UpdatePage = () => {
     return (
         <div className="mainContainer">
             <div className='mainDiv2'>
+                <p>{animeData.length > 0 ? (animeData[0].title.english = "" ? animeData[0].title.romaji : animeData[0].title.english) : ""}</p>
                 <img className='bannerImg' src={animeData.length > 0 ? animeData[0].bannerImage : ''} alt="" />
             </div>
             <div className='mainDiv3'>
@@ -151,6 +153,7 @@ const UpdatePage = () => {
                     id='score'
                     value={score}
                     onChange={changeHandlerScore}
+                    step={0.5}
                 />
 
                 <label htmlFor="episodes">Episodes</label>
@@ -161,7 +164,10 @@ const UpdatePage = () => {
                     onChange={changeHandlerEpisodes}
                 />
             </div>
-            <button onClick={submitHandler} >Submit</button>
+            <div className='buttons'>
+                <button onClick={submitHandler} >Submit</button>
+            </div>
+
         </div>
 
     );

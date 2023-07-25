@@ -4,26 +4,28 @@ import { AppContext } from '../context/AppContext';
 import { useContext } from 'react';
 
 
-const DataAnime = ({anime}) => {
+const DataAnime = ({ anime }) => {
 
-    const {titleClickHandler} = useContext(AppContext);
+    const { titleClickHandler } = useContext(AppContext);
     const key = anime.id;
 
     return (
         <div className="anime-card">
             <div className='animeTitle' onClick={() => titleClickHandler(key)}>
                 {anime.title.english !== null ? (
-                    <h2>{anime.title.english}</h2>
+                    <p className='titlediv'>{anime.title.english}</p>
                 ) : (
-                    <h2>{anime.title.romaji}</h2>
+                    <p className='titlediv'>{anime.title.romaji}</p>
                 )}
             </div>
-            <div className='mainCard'>
-                <img src={anime.coverImage.medium} alt="" />
+            <div className='mainCard' onClick={() => titleClickHandler(key)}>
+                {/* <div className='imgdiv'> */}
+                    <img src={anime.coverImage.medium} alt="" />
+                {/* </div> */}
                 <div className='details'>
                     <div className='dates'>
                         <p>Start Date: {anime.startDate.year}-{anime.startDate.month}-{anime.startDate.day}</p>
-                        <p>End Date: {anime.endDate.year}-{anime.endDate.month}-{anime.endDate.day}</p>
+                        {/* <p>End Date: {anime.endDate.year}-{anime.endDate.month}-{anime.endDate.day}</p> */}
                     </div>
                     <div className='type'>
                         {anime.format !== 'MOVIE' ? (
