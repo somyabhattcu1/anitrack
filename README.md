@@ -60,6 +60,13 @@ npm run build
 git pull
 ```
 
+### Snippets
+![](public/assets/search1.png) 
+
+![](public/assets/search2.png)
+
+![](public/assets/update.png)
+
 
 
 
