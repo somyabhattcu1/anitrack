@@ -10,8 +10,7 @@ const UpdatePage = () => {
     const [status, setStatus] = useState("");
     const [score, setScore] = useState("");
     const [episodes, setEpisodes] = useState("");
-    const [repeat, setRepeat] = useState(0);    
-
+    const [repeat, setRepeat] = useState(0);   
 
     function changeHandlerStatus(e) {
         const { value } = e.target;
@@ -63,7 +62,8 @@ const UpdatePage = () => {
                 setStatus(data.data.SaveMediaListEntry.status);
                 setScore(data.data.SaveMediaListEntry.score);
                 setEpisodes(data.data.SaveMediaListEntry.progress);
-                setRepeat(data.data.SaveMediaListEntry.repeat)
+                setRepeat(data.data.SaveMediaListEntry.repeat);
+                console.log(data.data.SaveMediaListEntry.status);
             })
             .catch(error => {
                 console.error(error);
@@ -73,7 +73,6 @@ const UpdatePage = () => {
 
     useEffect(() => {
         getInfo();
-        console.log()
     }, [])
 
     function submitHandler() {
@@ -142,9 +141,10 @@ const UpdatePage = () => {
 
                         <option value='CURRENT'>Watching</option>
                         <option value='COMPLETED'>Completed</option>
-                        <option value='REWATCHING'>Rewatching</option>
+                        <option value='REPEATING'>Rewatching</option>
                         <option value='PAUSED'>Paused</option>
                         <option value='DROPPED'>Dropped</option>
+                        <option value='PLANNING'>PLANNING</option>
 
                     </select>
                 </div>
@@ -158,14 +158,14 @@ const UpdatePage = () => {
                     step={0.5}
                 />
 
-                <label htmlFor="episodes">Episodes</label>
+                <label htmlFor="episodes">Episodes Progress</label>
                 <input type="number"
                     name='episodes'
                     id='episodes'
                     value={episodes}
                     onChange={changeHandlerEpisodes}
                 />
-                <label htmlFor="repeat">Repeat</label>
+                <label htmlFor="repeat">Total Rewatches</label>
                 <input type="number"
                     name='repeat'
                     id='repeat'

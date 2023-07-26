@@ -95,6 +95,7 @@ body {
   padding: 15px;
   padding-top: 5px;
   width: 350px;
+  gap: 0.5em;
 }
 
 .selection {
