@@ -144,7 +144,7 @@ const UpdatePage = () => {
                         <option value='REPEATING'>Rewatching</option>
                         <option value='PAUSED'>Paused</option>
                         <option value='DROPPED'>Dropped</option>
-                        <option value='PLANNING'>PLANNING</option>
+                        <option value='PLANNING'>Planning</option>
 
                     </select>
                 </div>
