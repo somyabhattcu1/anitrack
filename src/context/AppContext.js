@@ -1,99 +1,92 @@
 import React, { createContext, useState } from 'react';
+
 const AppContext = createContext();
 
-const AppContextProvider = ({ children }) => {
-    const TOKEN = process.env.REACT_APP_CUSTOM123;
-    const [inputTxt,setInputTxt] = useState('');
-    const [animeData, setAnimeData] = useState([]);
-    const [titleClick,setTitleClick] = useState(false);
-    const [animeId, setAnimeId] = useState(0);
-
-  
-    const titleClickHandler = (key) => {
-      setTitleClick(true);
-      setAnimeId(key);
-    }
-
-
-    // Change Handler for inputTxt 
-    const InputHandler = (e) => {
-        const {value} = e.target;
-        setInputTxt(value);
-        setTimeout(() => {
-          fetchData();
-        }, 1500);
-    }
-
-
-    const SearchQuery = `
-    query ($search: String) {
-      Page {
-        media (search: $search, type: ANIME) {
-          id
-          title {
-            romaji
-            english
-            native
-          }
-          episodes
-          genres
-          season
-          seasonYear
-          genres
-          status
-          format
-          startDate {
-            year
-            month
-            day
-          }
-          endDate {
-            year
-            month
-            day
-          }
-          coverImage{
-            medium
-          }
-          bannerImage
+const SEARCH_ANIME_QUERY = `
+  query ($search: String, $type: MediaType) {
+    Page {
+      media (search: $search, type: $type) {
+        id
+        title {
+          romaji
+          english
+          native
         }
+        episodes
+        genres
+        season
+        seasonYear
+        genres
+        status
+        format
+        startDate {
+          year
+          month
+          day
+        }
+        endDate {
+          year
+          month
+          day
+        }
+        coverImage {
+          medium
+        }
+        bannerImage
       }
     }
-  `;
+  }
+`;
 
-  const variables = {
-    search: inputTxt,
+const AppContextProvider = ({ children }) => {
+  const accessToken = process.env.REACT_APP_CUSTOM123;
+  const [inputTxt, setInputTxt] = useState('');
+  const [animeData, setAnimeData] = useState([]);
+  const [titleClick, setTitleClick] = useState(false);
+  const [animeId, setAnimeId] = useState(0);
+
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    setInputTxt(value);
+    setTimeout(() => {
+      fetchData();
+    }, 1500);
   };
 
+  const titleClickHandler = (key) => {
+    setTitleClick(true);
+    setAnimeId(key);
+  };
 
   async function fetchData() {
     try {
-      let response = await fetch('https://graphql.anilist.co', {
+      const variables = {
+        search: inputTxt,
+        type: "ANIME",
+      };
+      const response = await fetch('https://graphql.anilist.co', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ query: SearchQuery, variables }), // Use 'query' instead of 'SearchQuery'
+        body: JSON.stringify({ query: SEARCH_ANIME_QUERY, variables }),
       });
-      let data = await response.json();
+      const data = await response.json();
       setAnimeData(data.data.Page.media);
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   }
 
-
-    //exporting values
+  //exporting values
   const value = {
     inputTxt,
-    InputHandler,
+    handleInputChange,
     animeData,
-    fetchData,
-    TOKEN,
+    accessToken,
     titleClick,
     titleClickHandler,
-    animeId
+    animeId,
   };
 
   return (
