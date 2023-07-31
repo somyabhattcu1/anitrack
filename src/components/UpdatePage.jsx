@@ -12,6 +12,19 @@ const UpdatePage = () => {
         repeat: 0,
     };
 
+    const [date, setDate] = useState(0);
+    const [CompleteDate, setCompleteDate] = useState(0);
+
+    const dateChange = (e) => {
+        setDate(e.target.value);
+        console.log(date);
+    }
+    const completeDateChange = (e) => {
+        setCompleteDate(e.target.value);
+        console.log(date);
+    }
+
+
     const [formData, setFormData] = useState(initialFormState);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -22,7 +35,7 @@ const UpdatePage = () => {
     const getInfo = () => {
         setLoading(true);
         setError(null);
-      
+
         const query = `
           mutation ($mediaId: Int) {
             SaveMediaListEntry(mediaId: $mediaId) {
@@ -31,44 +44,65 @@ const UpdatePage = () => {
               score
               progress
               repeat
+              startedAt{
+                year
+                month
+                day
+              }
+              completedAt {
+                year
+                month
+                day
+              }
             }
           }
         `;
-      
+
         const variables = {
-          mediaId: parseInt(animeId),
+            mediaId: parseInt(animeId),
         };
-      
+
         fetch('https://graphql.anilist.co', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ query, variables }),
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query, variables }),
         })
-          .then(response => response.json())
-          .then(data => {
-            const saveMediaListEntry = data?.data?.SaveMediaListEntry;
-      
-            if (saveMediaListEntry) {
-              setFormData(prevFormData => ({
-                ...prevFormData,
-                status: saveMediaListEntry.status || '',
-                score: saveMediaListEntry.score ? saveMediaListEntry.score : '',
-                episodes: saveMediaListEntry.progress ? saveMediaListEntry.progress: '',
-                repeat: saveMediaListEntry.repeat || 0,
-              }));
-            }
-          })
-          .catch(error => {
-            setError(error.message || 'An error occurred');
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      };
-      
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                const saveMediaListEntry = data?.data?.SaveMediaListEntry;
+                console.log(saveMediaListEntry.startedAt.year);
+                if (saveMediaListEntry.startedAt.year !== null) {
+                    const formattedDate = `${saveMediaListEntry.startedAt.year}-${saveMediaListEntry.startedAt.month.toString().padStart(2, '0')}-${saveMediaListEntry.startedAt.day.toString().padStart(2, '0')}`;
+                    setDate(formattedDate);
+                }
+                if(saveMediaListEntry.completedAt.year){
+                    const formattedDate = `${saveMediaListEntry.completedAt.year}-${saveMediaListEntry.completedAt.month.toString().padStart(2, '0')}-${saveMediaListEntry.completedAt.day.toString().padStart(2, '0')}`;
+                    setCompleteDate(formattedDate);
+                }
+
+                if (saveMediaListEntry) {
+                    setFormData(prevFormData => ({
+                        ...prevFormData,
+                        status: saveMediaListEntry.status || '',
+                        score: saveMediaListEntry.score ? saveMediaListEntry.score : '',
+                        episodes: saveMediaListEntry.progress ? saveMediaListEntry.progress : '',
+                        repeat: saveMediaListEntry.repeat || 0,
+                    }));
+
+                }
+            })
+            .catch(error => {
+                setError(error.message || 'An error occurred');
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -79,27 +113,52 @@ const UpdatePage = () => {
     }
 
     function submitHandler() {
+
+        const arr = date.split("-");
+        const arr1 = CompleteDate.split("-");
+    
         const mutationQuery = `
-            mutation ($mediaId: Int, $status: MediaListStatus, $progress: Int, $score: Float, $repeat: Int) {
-                SaveMediaListEntry(mediaId: $mediaId, status: $status, progress: $progress, score: $score, repeat: $repeat) {
+            mutation ($mediaId: Int, $status: MediaListStatus, $progress: Int, $score: Float, $repeat: Int,$startedAt: FuzzyDateInput, $completedAt: FuzzyDateInput) {
+                SaveMediaListEntry(mediaId: $mediaId, status: $status, progress: $progress, score: $score, repeat: $repeat,startedAt:$startedAt, completedAt: $completedAt) {
                     id
                     status
                     progress
                     score
                     repeat
+                    startedAt{
+                        year
+                        month
+                        day
+                    }
+                    completedAt {
+                        year
+                        month
+                        day
+                      }
                 }
             }
         `;
-
+    
         const updateVariables = {
             mediaId: parseInt(animeId),
             score: parseFloat(formData.score),
             progress: parseInt(formData.episodes),
             status: formData.status,
             repeat: parseInt(formData.repeat),
+            startedAt: {
+                year: parseInt(arr[0]),
+                month: parseInt(arr[1]),
+                day: parseInt(arr[2])
+            },
+            completedAt: {
+                year: parseInt(arr1[0]),
+                month: parseInt(arr1[1]),
+                day: parseInt(arr1[2])
+            }
         };
 
         console.log(updateVariables);
+        console.log(typeof date);
 
         setLoading(true);
         setError(null);
@@ -116,16 +175,16 @@ const UpdatePage = () => {
                 variables: updateVariables,
             }),
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-        })
-        .catch(error => {
-            setError(error.message || 'An error occurred');
-        })
-        .finally(() => {
-            setLoading(false);
-        });
+            .then(response => response.json())
+            .then(data => {
+                console.log("updated data", data);
+            })
+            .catch(error => {
+                setError(error.message || 'An error occurred');
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     }
 
     return (
@@ -177,6 +236,20 @@ const UpdatePage = () => {
                     id="repeat"
                     value={formData.repeat}
                     onChange={handleChange}
+                />
+                <label htmlFor="date">Start Date</label>
+                <input
+                    type="date"
+                    name="date"
+                    value={date}
+                    onChange={dateChange}
+                />
+                <label htmlFor="date">Complete Date</label>
+                <input
+                    type="date"
+                    name="CompleteDate"
+                    value={CompleteDate}
+                    onChange={completeDateChange}
                 />
             </div>
             <div className="buttons">

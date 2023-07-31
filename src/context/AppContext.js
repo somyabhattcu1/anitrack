@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+import { useEffect } from 'react';
 
 const AppContext = createContext();
 
@@ -48,20 +49,23 @@ const AppContextProvider = ({ children }) => {
   const handleInputChange = (e) => {
     const { value } = e.target;
     setInputTxt(value);
-    setTimeout(() => {
-      fetchData();
-    }, 1500);
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      fetchData(inputTxt);
+    }, 1500);
+  },[inputTxt])
 
   const titleClickHandler = (key) => {
     setTitleClick(true);
     setAnimeId(key);
   };
 
-  async function fetchData() {
+  async function fetchData(input) {
     try {
       const variables = {
-        search: inputTxt,
+        search: input,
         type: "ANIME",
       };
       const response = await fetch('https://graphql.anilist.co', {
