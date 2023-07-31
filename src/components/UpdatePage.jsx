@@ -13,14 +13,16 @@ const UpdatePage = () => {
     };
 
     const [date, setDate] = useState(0);
-    const [CompleteDate, setCompleteDate] = useState(0);
+    const [completeDate, setCompleteDate] = useState(0);
 
     const dateChange = (e) => {
         setDate(e.target.value);
         console.log(date);
     }
     const completeDateChange = (e) => {
-        setCompleteDate(e.target.value);
+        if (e.target.value) {
+            setCompleteDate(e.target.value);
+        }
         console.log(date);
     }
 
@@ -32,6 +34,7 @@ const UpdatePage = () => {
     useEffect(() => {
         getInfo();
     }, []);
+
     const getInfo = () => {
         setLoading(true);
         setError(null);
@@ -72,14 +75,13 @@ const UpdatePage = () => {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 const saveMediaListEntry = data?.data?.SaveMediaListEntry;
-                console.log(saveMediaListEntry.startedAt.year);
+
                 if (saveMediaListEntry.startedAt.year !== null) {
                     const formattedDate = `${saveMediaListEntry.startedAt.year}-${saveMediaListEntry.startedAt.month.toString().padStart(2, '0')}-${saveMediaListEntry.startedAt.day.toString().padStart(2, '0')}`;
                     setDate(formattedDate);
                 }
-                if(saveMediaListEntry.completedAt.year){
+                if (saveMediaListEntry.completedAt.year) {
                     const formattedDate = `${saveMediaListEntry.completedAt.year}-${saveMediaListEntry.completedAt.month.toString().padStart(2, '0')}-${saveMediaListEntry.completedAt.day.toString().padStart(2, '0')}`;
                     setCompleteDate(formattedDate);
                 }
@@ -114,9 +116,9 @@ const UpdatePage = () => {
 
     function submitHandler() {
 
-        const arr = date.split("-");
-        const arr1 = CompleteDate.split("-");
-    
+        const arr = date ? (date.split("-")) : "";
+        const arr1 = completeDate ? (completeDate.split("-")) : "";
+
         const mutationQuery = `
             mutation ($mediaId: Int, $status: MediaListStatus, $progress: Int, $score: Float, $repeat: Int,$startedAt: FuzzyDateInput, $completedAt: FuzzyDateInput) {
                 SaveMediaListEntry(mediaId: $mediaId, status: $status, progress: $progress, score: $score, repeat: $repeat,startedAt:$startedAt, completedAt: $completedAt) {
@@ -138,13 +140,13 @@ const UpdatePage = () => {
                 }
             }
         `;
-    
+
         const updateVariables = {
-            mediaId: parseInt(animeId),
+            mediaId: animeId,
             score: parseFloat(formData.score),
-            progress: parseInt(formData.episodes),
+            progress: formData.episodes,
             status: formData.status,
-            repeat: parseInt(formData.repeat),
+            repeat: formData.repeat,
             startedAt: {
                 year: parseInt(arr[0]),
                 month: parseInt(arr[1]),
@@ -157,8 +159,8 @@ const UpdatePage = () => {
             }
         };
 
-        console.log(updateVariables);
-        console.log(typeof date);
+        console.log("types : ")
+        console.log(typeof arr[0]);
 
         setLoading(true);
         setError(null);
@@ -221,6 +223,7 @@ const UpdatePage = () => {
                     step={0.5}
                 />
 
+                
                 <label htmlFor="episodes">Episodes Progress</label>
                 <input
                     type="number"
@@ -237,20 +240,27 @@ const UpdatePage = () => {
                     value={formData.repeat}
                     onChange={handleChange}
                 />
-                <label htmlFor="date">Start Date</label>
-                <input
-                    type="date"
-                    name="date"
-                    value={date}
-                    onChange={dateChange}
-                />
-                <label htmlFor="date">Complete Date</label>
-                <input
-                    type="date"
-                    name="CompleteDate"
-                    value={CompleteDate}
-                    onChange={completeDateChange}
-                />
+
+                <div className="dates">
+                    <div className="date1">
+                        <label htmlFor="date">Start Date</label>
+                        <input
+                            type="date"
+                            name="date"
+                            value={date}
+                            onChange={dateChange}
+                        />
+                    </div>
+                    <div className="date1">
+                        <label htmlFor="completeDate">Complete Date</label>
+                        <input
+                            type="date"
+                            name="completeDate"
+                            value={completeDate}
+                            onChange={completeDateChange}
+                        />
+                    </div>
+                </div>
             </div>
             <div className="buttons">
                 <button onClick={submitHandler} disabled={loading}>
