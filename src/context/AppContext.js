@@ -53,6 +53,7 @@ const AppContextProvider = ({ children }) => {
 
   useEffect(() => {
     setTimeout(() => {
+      console.log(inputTxt)
       fetchData(inputTxt);
     }, 1500);
   },[inputTxt])

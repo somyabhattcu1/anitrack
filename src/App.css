@@ -56,11 +56,15 @@ body {
 .mainCard {
   padding: 2px;
   display: flex;
-  gap: 1em;
   font-size: 12px;
+  align-items: center;
+  gap: 2em;
   margin-bottom: -1em;
 }
 
+.details {
+  /* border: 1px solid white; */
+}
 
 
 .titlediv{

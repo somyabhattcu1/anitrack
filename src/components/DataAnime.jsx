@@ -18,15 +18,9 @@ const DataAnime = ({ anime }) => {
                 )}
             </div>
             <div className='mainCard' onClick={() => titleClickHandler(key)}>
-                {/* <div className='imgdiv'> */}
                     <img src={anime.coverImage.medium} alt="" />
-                {/* </div> */}
                 <div className='details'>
-                    <div className='dates'>
                         <p>Start Date: {anime.startDate.year}-{anime.startDate.month}-{anime.startDate.day}</p>
-                        {/* <p>End Date: {anime.endDate.year}-{anime.endDate.month}-{anime.endDate.day}</p> */}
-                    </div>
-                    <div className='type'>
                         {anime.format !== 'MOVIE' ? (
                             <div>
                                 <p>Format: {anime.format}</p>
@@ -34,13 +28,12 @@ const DataAnime = ({ anime }) => {
                             </div>
                         ) : (
                             <div>
+                                <p>Number of Episodes: NA</p>
                                 <p>Format: {anime.format}</p>
                             </div>
                         )}
-                    </div>
-                    <div className='genre'>
+                    <p>{anime.status}</p>
                         <p>{anime.genres.join((', '))}</p>
-                    </div>
                 </div>
             </div>
         </div>
