@@ -102,6 +102,10 @@ body {
   gap: 0.5em;
 }
 
+.f{
+  display: flex;
+}
+
 .selection {
   gap: 0.5em;
   display: flex;

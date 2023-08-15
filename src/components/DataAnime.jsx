@@ -22,17 +22,16 @@ const DataAnime = ({ anime }) => {
                 <div className='details'>
                         <p>Start Date: {anime.startDate.year}-{anime.startDate.month}-{anime.startDate.day}</p>
                         {anime.format !== 'MOVIE' ? (
-                            <div>
+                            <div className=''>
                                 <p>Format: {anime.format}</p>
-                                <p>Number of Episodes: {anime.episodes}</p>
+                                {anime.episodes? <p>Episodes : {anime.episodes}</p> : <p>Episodes : NA</p>}
                             </div>
                         ) : (
                             <div>
-                                <p>Number of Episodes: NA</p>
                                 <p>Format: {anime.format}</p>
                             </div>
                         )}
-                    <p>{anime.status}</p>
+                    <p>Status: {anime.status}</p>
                         <p>{anime.genres.join((', '))}</p>
                 </div>
             </div>

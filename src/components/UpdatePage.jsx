@@ -48,7 +48,7 @@ const UpdatePage = () => {
               progress
               repeat
               startedAt{
-                year
+                year    
                 month
                 day
               }
