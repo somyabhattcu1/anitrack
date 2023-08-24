@@ -4,7 +4,6 @@
 
 body {
   max-width: 500px;
-  max-height: 500px;
   background-color: #262626;
   color: #ffffff;
   font-family: 'Poppins', sans-serif;
@@ -12,13 +11,14 @@ body {
 
 .SearchBox {
   padding: 10px 0px 0px 0px;
-  width: 350px;
+  max-width: 350px;
   max-height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   /* gap: 1em; */
 }
+
 
  input {
   font-family: 'Poppins', sans-serif;
@@ -27,10 +27,18 @@ body {
   padding: 5px;
   min-height:30px;
   width: 95%;
-  outline: none;
+  outline: none;       
   background-color: #363636;
   border: none;
 }
+
+
+
+.f p {
+  padding-left: 2em;
+  cursor: pointer;
+}
+
 
 *::-webkit-scrollbar {
   width: 12px;
