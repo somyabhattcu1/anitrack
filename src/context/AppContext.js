@@ -40,20 +40,20 @@ const SEARCH_ANIME_QUERY = `
 `;
 
 const AppContextProvider = ({ children }) => {
-  const accessToken = process.env.REACT_APP_CUSTOM123;
+  const accessToken = process.env.REACT_APP_CUSTOM123
+  const type = process.env.REACT_APP_MANGA_TYPE
   const [inputTxt, setInputTxt] = useState('');
   const [animeData, setAnimeData] = useState([]);
   const [titleClick, setTitleClick] = useState(false);
   const [animeId, setAnimeId] = useState(0);
 
   const handleInputChange = (e) => {
-    const { value } = e.target;
-    setInputTxt(value);
+    setInputTxt(e.target.value);
   };
 
   useEffect(() => {
     setTimeout(() => {
-      console.log(inputTxt)
+      if(inputTxt === "") return
       fetchData(inputTxt);
     }, 1500);
   },[inputTxt])
@@ -67,7 +67,7 @@ const AppContextProvider = ({ children }) => {
     try {
       const variables = {
         search: input,
-        type: "ANIME",
+        type: type,
       };
       const response = await fetch('https://graphql.anilist.co', {
         method: 'POST',

@@ -3,6 +3,7 @@ import '../App.css'
 import { AppContext } from '../context/AppContext';
 import DataAnime from './DataAnime';
 
+
 const SearchPage = () => {
 
     const { inputTxt, handleInputChange, animeData} = useContext(AppContext);
@@ -14,7 +15,9 @@ const SearchPage = () => {
             <div className='mainDiv'>
                 {animeData.map((anime) => {
                     return (
-                        <DataAnime anime={anime}/>
+                        <div>
+                            <DataAnime anime={anime}/>
+                        </div>
                     );
                 })}
             </div>

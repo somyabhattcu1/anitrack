@@ -3,7 +3,7 @@ import { AppContext } from '../context/AppContext';
 import '../App.css';
 
 const UpdatePage = () => {
-    const { accessToken, animeData, animeId } = useContext(AppContext);
+    const { accessToken, animeData, animeId, manga } = useContext(AppContext);
 
     const initialFormState = {
         status: '',
@@ -159,8 +159,6 @@ const UpdatePage = () => {
             }
         };
 
-        console.log("types : ")
-        console.log(typeof arr[0]);
 
         setLoading(true);
         setError(null);
@@ -224,7 +222,7 @@ const UpdatePage = () => {
                 />
 
                 
-                <label htmlFor="episodes">Episodes Progress</label>
+                <label htmlFor="episodes">manga</label>
                 <input
                     type="number"
                     name="episodes"

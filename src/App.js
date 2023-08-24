@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div>
-        {titleClick? <UpdatePage/> : <SearchPage/>}
+        {titleClick? <UpdatePage/> : <SearchPage/> }
     </div>
   );
 }
