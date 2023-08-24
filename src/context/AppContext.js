@@ -41,7 +41,7 @@ const SEARCH_ANIME_QUERY = `
 
 const AppContextProvider = ({ children }) => {
   const accessToken = process.env.REACT_APP_CUSTOM123
-  const type = process.env.REACT_APP_MANGA_TYPE
+  const type = process.env.REACT_APP_TYPE
   const [inputTxt, setInputTxt] = useState('');
   const [animeData, setAnimeData] = useState([]);
   const [titleClick, setTitleClick] = useState(false);
@@ -65,9 +65,11 @@ const AppContextProvider = ({ children }) => {
 
   async function fetchData(input) {
     try {
+      console.log(type)
+      console.log(process.env)
       const variables = {
         search: input,
-        type: type,
+        type: type? type : 'ANIME'
       };
       const response = await fetch('https://graphql.anilist.co', {
         method: 'POST',
