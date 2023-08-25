@@ -20,10 +20,10 @@ AniTracker is a extension that provides a seamless way to update your anime deta
 Require nodejs v14+, git.
 
 ### Installation
-```sh
+```bash
 git clone https://github.com/somyabhattcu1/anitrack.git
 ```
-```
+```cmd
 cd anitrack
 ```
 Create an .env file in your root folder ```(anitrack)```
@@ -33,7 +33,6 @@ Paste the tokem you get from the above link in the .env file in following way
 
 ```js
 REACT_APP_CUSTOM123 = 'PASTE_YOUR_TOKEN_HERE'
-REACT_APP_TYPE = // set value as per your need (should be either 'ANIME' or 'MANGA), by default it will be 'ANIME'
 ```
 
 ### How to add/run on your browser
@@ -62,7 +61,7 @@ npm run build
 
 
 ### For Updates 
-```
+```bash
 git pull
 ```
 
