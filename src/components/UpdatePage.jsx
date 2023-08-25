@@ -3,33 +3,27 @@ import { AppContext } from '../context/AppContext';
 import '../App.css';
 
 const UpdatePage = () => {
-    const { accessToken, animeData, animeId, manga } = useContext(AppContext);
-
-    const initialFormState = {
+    const { accessToken, animeData, animeId } = useContext(AppContext);
+    const [date, setDate] = useState(0);
+    const [completeDate, setCompleteDate] = useState(0);
+    const [formData, setFormData] = useState({
         status: '',
         score: '',
         episodes: '',
         repeat: 0,
-    };
-
-    const [date, setDate] = useState(0);
-    const [completeDate, setCompleteDate] = useState(0);
+    });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const dateChange = (e) => {
         setDate(e.target.value);
-        console.log(date);
     }
     const completeDateChange = (e) => {
         if (e.target.value) {
             setCompleteDate(e.target.value);
         }
-        console.log(date);
-    }
+    }    
 
-
-    const [formData, setFormData] = useState(initialFormState);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         getInfo();
@@ -106,7 +100,7 @@ const UpdatePage = () => {
     };
 
 
-    function handleChange(e) {
+    function handleChange(e) {  
         const { name, value } = e.target;
         setFormData(prevFormData => ({
             ...prevFormData,
@@ -177,7 +171,7 @@ const UpdatePage = () => {
         })
             .then(response => response.json())
             .then(data => {
-                console.log("updated data", data);
+                // console.log("updated data", data);
             })
             .catch(error => {
                 setError(error.message || 'An error occurred');

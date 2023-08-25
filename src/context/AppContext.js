@@ -1,12 +1,12 @@
-import React, { createContext, useState } from 'react';
-import { useEffect } from 'react';
+import React, { createContext, useState } from "react";
+import { useEffect } from "react";
 
 const AppContext = createContext();
 
 const SEARCH_ANIME_QUERY = `
-  query ($search: String, $type: MediaType) {
+  query ($search: String, $type: MediaType, $id: Int) {
     Page {
-      media (search: $search, type: $type) {
+      media (search: $search, type: $type, id:$id) {
         id
         title {
           romaji
@@ -39,10 +39,10 @@ const SEARCH_ANIME_QUERY = `
   }
 `;
 
+
 const AppContextProvider = ({ children }) => {
-  const accessToken = process.env.REACT_APP_CUSTOM123
-  const type = process.env.REACT_APP_TYPE
-  const [inputTxt, setInputTxt] = useState('');
+  const accessToken = process.env.REACT_APP_CUSTOM123;
+  const [inputTxt, setInputTxt] = useState("");
   const [animeData, setAnimeData] = useState([]);
   const [titleClick, setTitleClick] = useState(false);
   const [animeId, setAnimeId] = useState(0);
@@ -53,10 +53,10 @@ const AppContextProvider = ({ children }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      if(inputTxt === "") return
+      if (inputTxt === "") return;
       fetchData(inputTxt);
     }, 1500);
-  },[inputTxt])
+  }, [inputTxt]);
 
   const titleClickHandler = (key) => {
     setTitleClick(true);
@@ -65,16 +65,14 @@ const AppContextProvider = ({ children }) => {
 
   async function fetchData(input) {
     try {
-      console.log(type)
-      console.log(process.env)
       const variables = {
         search: input,
-        type: type? type : 'ANIME'
+        type: "ANIME",
       };
-      const response = await fetch('https://graphql.anilist.co', {
-        method: 'POST',
+      const response = await fetch("https://graphql.anilist.co", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ query: SEARCH_ANIME_QUERY, variables }),
       });
@@ -94,13 +92,9 @@ const AppContextProvider = ({ children }) => {
     titleClick,
     titleClickHandler,
     animeId,
-  };
+    };
 
-  return (
-    <AppContext.Provider value={value}>
-      {children}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
 export { AppContext, AppContextProvider };
